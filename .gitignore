@@ -1,0 +1,51 @@
+# Folders
+/.git
+/.cache
+/.idea
+/.well-known
+/cgi-bin
+/bitrix
+/upload
+/test
+/local/vendor
+node_modules/
+
+# Files
+Thumbs.db
+.DS_Store
+.htsecure
+/.htpasswd
+/.htaccess.restore
+/.htaccess
+/.htaccess.old
+/.ftpaccess
+/web.config
+/*.ini
+/*.txt
+/*.log
+/robots.txt
+/sitemap.xml
+/sitemap*.xml
+/yandex*.html
+/google*.html
+/cmsmagazine*
+
+# Include files
+/include/
+/food/sect_home.php
+/food/sect_table.php
+/about/index_about.php
+/about/index_goal.php
+
+# Archives
+*.7z
+*.xar
+*.zip
+*.zipx
+*.rar
+*.gz
+*.gzip
+*.tar
+*.tgz
+*.tar-gz
+*.tar.gz

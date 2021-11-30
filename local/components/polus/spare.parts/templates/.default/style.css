@@ -1,0 +1,48 @@
+.parts-container {
+  position: relative;
+  display: flex;
+}
+.parts-container .container-image {
+  margin-right: 50px;
+}
+.parts-container .container-image img {
+  max-width: 600px;
+}
+.parts-container .container-image__block .picture-remove {
+  position: absolute;
+  border-radius: 50%;
+  left: 0;
+}
+.parts-container .container-point {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #8fc468;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.parts-container .container-point.active {
+  background-color: #488a00;
+}
+.parts-container__points {
+  position: relative;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.5s linear;
+}
+
+.fade-enter, .fade-leave-to {
+  right: -170px;
+  opacity: 0;
+}
+
+.fade-leave, .fade-enter-to {
+  right: 0px;
+  opacity: 1;
+}

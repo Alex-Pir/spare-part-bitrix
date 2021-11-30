@@ -1,0 +1,45 @@
+{
+  "name": "@citrus/ugrarealty",
+  "description": "Поддержка проекта `Ugrarealty`",
+  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "Alexander Pirogov",
+      "email": "a.pirogov@citrus-soft.ru"
+    }
+  ],
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "webpack-dev-server --hot --open",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vue-router": "^3.5.1"
+  },
+  "devDependencies": {
+    "vue-loader": "^15.4.2",
+    "css-loader": "^1.0.0",
+    "webpack": "^4.20.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9",
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.9.0",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.9.5",
+    "@vue/compiler-sfc": "^3.0.0-beta.9",
+    "node-sass": "^4.14.1",
+    "postcss": "^8.2.10",
+    "postcss-import": "^14.0.1",
+    "promise-polyfill": "^8.1.3",
+    "rollup": "^1.19.3",
+    "rollup-plugin-babel-minify": "^9.0.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-sass": "^1.2.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-vue": "^6.0.0",
+    "rollup-plugin-vue2": "^0.8.1",
+    "vue-template-compiler": "^2.6.10"
+  }
+}

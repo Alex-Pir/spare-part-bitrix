@@ -1,0 +1,9 @@
+{
+  "name": "polus/polus_project",
+  "description": "API for spare parts",
+  "autoload": {
+    "psr-4": {
+      "Polus\\": "lib/Polus/"
+    }
+  }
+}
