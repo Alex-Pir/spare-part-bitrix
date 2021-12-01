@@ -20,6 +20,8 @@ export let SpareParts = {
             return 'left:' + x + 'px;top:' + y + 'px;';
         },
         choosePoint(sparePartId) {
+            this.currentSparePartId = sparePartId;
+
             const {id} = this.currentElement;
 
             if (id && parseInt(sparePartId) === parseInt(id)) {

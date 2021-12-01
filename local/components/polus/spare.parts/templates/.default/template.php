@@ -18,7 +18,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
                 v-for="element in points"
                 :key="element.id"
                 class="container-point"
-                :class="{'active': currentElement.id && currentElement.id == element.value}"
+                :class="{'active': currentSparePartId == element.value}"
                 :style="getStyle(element.x, element.y)"
                 v-html="element.id"
                 @click="choosePoint(element.value)"
