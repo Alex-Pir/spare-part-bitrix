@@ -27,10 +27,10 @@ class polus_spareparts extends CModule
 	 */
 	public function __construct()
 	{
-		$this->MODULE_NAME = Loc::getMessage("CITRUS_REST_SALE_F_NAME");
-		$this->MODULE_DESCRIPTION = Loc::getMessage("CITRUS_REST_SALE_F_DESCRIPTION");
-		$this->PARTNER_NAME = Loc::getMessage("CITRUS_REST_SALE_F_COMPANY_NAME");
-		$this->PARTNER_URI = Loc::getMessage('CITRUS_REST_SALE_F_COMPANY_URL');
+		$this->MODULE_NAME = Loc::getMessage("POLUS_SPARE_PARTS_F_NAME");
+		$this->MODULE_DESCRIPTION = Loc::getMessage("POLUS_SPARE_PARTS_F_DESCRIPTION");
+		$this->PARTNER_NAME = Loc::getMessage("POLUS_SPARE_PARTS_F_COMPANY_NAME");
+		$this->PARTNER_URI = Loc::getMessage('POLUS_SPARE_PARTS_F_COMPANY_URL');
 
 		$this->loadVersion();
 	}
@@ -56,7 +56,7 @@ class polus_spareparts extends CModule
 
 		$APPLICATION->IncludeAdminFile(
 			Loc::getMessage(
-				"CITRUS_REST_SALE_F_INSTALL_TITLE",
+				"POLUS_SPARE_PARTS_F_INSTALL_TITLE",
 				array("#MODULE#" => $this->MODULE_NAME, "#MODULE_ID#" => $this->MODULE_ID)
 			),
 			__DIR__ . "/step1.php"
@@ -84,7 +84,7 @@ class polus_spareparts extends CModule
 
 		$APPLICATION->IncludeAdminFile(
 			Loc::getMessage(
-				"CITRUS_REST_SALE_F_INSTALL_TITLE",
+				"POLUS_SPARE_PARTS_F_INSTALL_TITLE",
 				array("#MODULE#" => $this->MODULE_NAME)
 			),
 			__DIR__ . "/uninstall.php"

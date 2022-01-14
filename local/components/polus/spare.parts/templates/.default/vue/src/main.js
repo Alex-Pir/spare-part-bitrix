@@ -32,7 +32,7 @@ export let SpareParts = {
             this.$request
                 .setUrl(this.componentName)
                 .setSignedParameters(this.signedParameters)
-                .setData({elementId: sparePartId})
+                .setData({elementId: sparePartId, sessid: this.sessid})
                 .send(this.methodName)
                 .then(response => {
                     this.currentElement = response;

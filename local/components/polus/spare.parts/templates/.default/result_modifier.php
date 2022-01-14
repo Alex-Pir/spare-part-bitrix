@@ -10,6 +10,7 @@ $arResult = array_merge(
     [
         "componentName" => $this->getComponent()->getName(),
         "methodName" => "getSparePartInfo",
-        "signedParameters" => $this->getComponent()->getSignedParameters()
+        "signedParameters" => $this->getComponent()->getSignedParameters(),
+        "sessid" => bitrix_sessid()
     ]
 );

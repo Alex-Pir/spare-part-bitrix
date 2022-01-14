@@ -22,8 +22,8 @@ export class VueInit {
             return;
         }
 
-        console.log(this.component);
-
         Vue.create(this.component);
     }
 }
+
+export default {VueInit};

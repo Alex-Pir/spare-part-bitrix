@@ -2,11 +2,14 @@
 
 /** @var array $arResult */
 
+use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Web\Json;
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
     die();
 }
+
+Loc::loadMessages(__FILE__);
 ?>
 
 <div id="app" class="parts-container">
@@ -30,7 +33,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
             <img v-if="currentElement.picture" :src="currentElement.picture" :title="currentElement.name" :alt="currentElement.name"/>
             <h3 v-if="currentElement.name" v-html="currentElement.name"></h3>
             <div v-if="currentElement.text" v-html="currentElement.text"></div>
-            <a v-if="currentElement.url" :href="currentElement.url">Подробнее</a>
+            <a v-if="currentElement.url" :href="currentElement.url"><?= Loc::getMessage("SPARE_PART_TPL_BTN_ELEMENT_DETAIL_NAME") ?></a>
         </div>
     </transition>
 </div>

@@ -48,10 +48,8 @@ class ElementHelper {
      *
      * @param int $iblockId
      * @param int $elementId
-     * @param bool $checkElements
      * @return array
      * @throws \Bitrix\Main\ArgumentException
-     * @throws \Bitrix\Main\LoaderException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
@@ -83,6 +81,17 @@ class ElementHelper {
         return $points;
     }
 
+    /**
+     * Возвращает данные по элементу информационного блока
+     *
+     * @param int $iblockId
+     * @param int $elementId
+     * @return array
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
     public static function getIblockElementData(int $iblockId, int $elementId): array {
         static::includeIblockModule();
 
@@ -91,7 +100,14 @@ class ElementHelper {
 
         $element = $iblockClass::getRow([
             "filter" => ["=ID" => $elementId],
-            "select" => ["NAME", "PREVIEW_TEXT", "PREVIEW_PICTURE", "CODE", "IBLOCK_SECTION_ID", "DETAIL_URL" => "IBLOCK.DETAIL_PAGE_URL"]
+            "select" => [
+                "NAME",
+                "PREVIEW_TEXT",
+                "PREVIEW_PICTURE",
+                "CODE",
+                "IBLOCK_SECTION_ID",
+                "DETAIL_URL" => "IBLOCK.DETAIL_PAGE_URL"
+            ]
         ]);
 
         if ($element["PREVIEW_PICTURE"]) {

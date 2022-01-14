@@ -20,6 +20,19 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
     /** @var string модуль запасных частей */
     const SPARE_PARTS_MODULE = "polus.spareparts";
 
+    public function configureActions() {
+        return [
+            "getSparePartInfo" => [
+                "prefilters" => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf()
+                ]
+            ]
+        ];
+    }
+
     /**
      * Параметры, которые можно использовать при
      * REST-взаимодействии с компонентом
@@ -96,20 +109,10 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
      */
     protected function includeModule(): bool {
         if (!Main\Loader::includeModule(static::SPARE_PARTS_MODULE)) {
-            throw new Main\LoaderException(Loc::getMessage(""));
+            throw new Main\LoaderException(Loc::getMessage("SPARE_PART_CLASS_MODULE_NOT_FOUND"));
         }
 
         return true;
-    }
-
-    public function configureActions() {
-        return [
-            "getSparePartInfo" => [
-                "prefilters" => [
-
-                ]
-            ]
-        ];
     }
 
     public function getSparePartInfoAction(int $elementId): array {
