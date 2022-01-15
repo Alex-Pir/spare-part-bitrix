@@ -21,20 +21,20 @@ class SparePartFileTable extends DataManager {
 
     public static function getMap() {
         return [
-            new IntegerField("ID", [
+            new IntegerField(static::ID, [
                 "primary" => true,
                 "autocomplete" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FILE_FIELD_ID")
             ]),
-            new IntegerField("IBLOCK_ID", [
+            new IntegerField(static::IBLOCK_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FILE_FIELD_IBLOCK_ID")
             ]),
-            new IntegerField("ELEMENT_ID", [
+            new IntegerField(static::ELEMENT_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FILE_FIELD_ELEMENT_ID")
             ]),
-            new IntegerField("FILE_ID", [
+            new IntegerField(static::FILE_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FILE_FIELD_FILE_ID")
             ])
@@ -48,8 +48,8 @@ class SparePartFileTable extends DataManager {
      */
     public static function getSelectRows(): array {
         return [
-            self::ID,
-            self::FILE_ID
+            static::ID,
+            static::FILE_ID
         ];
     }
 }

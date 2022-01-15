@@ -92,6 +92,41 @@ class polus_spareparts extends CModule
 	}
 
     /**
+     * Добалвение (регистрация) обработчиков
+     *
+     * @return void
+     */
+    public function installEvents() {
+        $eventManager = Main\EventManager::getInstance();
+
+        /**
+         * Добавляет таб в инфоблок
+         */
+        $eventManager->registerEventHandler(
+            "iblock",
+            "OnAdminIBlockElementEdit",
+            $this->MODULE_ID,
+            "Polus\\SpareParts\\Handler", "initSparePartsTab"
+        );
+    }
+
+    /**
+     * Удаление всех зависимостей между модулями (события)
+     *
+     * @return void
+     */
+    public function uninstallEvents() {
+        $eventManager = Main\EventManager::getInstance();
+
+        $eventManager->unRegisterEventHandler(
+            "iblock",
+            "OnAdminIBlockElementEdit",
+            $this->MODULE_ID,
+            "Polus\\SpareParts\\Handler", "initSparePartsTab"
+        );
+    }
+
+    /**
      * Установить данные по версии модуля
      */
     protected function loadVersion()
