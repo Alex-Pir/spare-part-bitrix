@@ -1,16 +1,12 @@
 <?php
-namespace Polus\Handlers;
+namespace Polus\SpareParts\Handlers;
 
-use Bitrix\Main\EventManager;
-use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UI\Extension;
 use Bitrix\Main\Web\Json;
-use Citfact\Rest\Traits\HasModuleOption;
-use Polus\SpareParts\Constants;
 use Polus\SpareParts\Options;
 use Polus\SpareParts\Tools\ElementHelper;
-use Polus\SpareParts\Traits\HasModules;
+use Polus\SpareParts\Traits\HasModuleOptions;
 
 Loc::loadMessages(__FILE__);
 
@@ -18,17 +14,17 @@ Loc::loadMessages(__FILE__);
  * Таб с запасными частями
  */
 class TabProductElement {
-    use HasModuleOption;
+    use HasModuleOptions;
 
     public static function initSparePartsTab(): array {
         $tabSet = new TabProductElement();
 
         return [
             "TABSET"  => $tabSet->getTabName(),
-            "Check"   => [$tabSet, "check"], //callable для функции проверки
-            "Action"  => [$tabSet, "action"], //callable для функции хз чего
-            "GetTabs" => [$tabSet, "getTabList"], //callable для получения списка табов
-            "ShowTab" => [$tabSet, "showTabContent"], //callable для вывода содержимого табов
+            "Check"   => [$tabSet, "check"],
+            "Action"  => [$tabSet, "action"],
+            "GetTabs" => [$tabSet, "getTabList"],
+            "ShowTab" => [$tabSet, "showTabContent"]
         ];
     }
 
@@ -59,6 +55,18 @@ class TabProductElement {
         ] : null;
     }
 
+    /**
+     * Содержимое таба с запасными частями
+     *
+     * @param $div
+     * @param $elementInfo
+     * @param $formData
+     * @return void
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
     public function showTabContent($div, $elementInfo, $formData) {
         Extension::load(["polus.vue.spare-parts"]);
 
@@ -96,14 +104,30 @@ class TabProductElement {
         echo ob_get_clean();
     }
 
+    /**
+     * Проверка доступности
+     *
+     * @return bool
+     */
     public function check() {
         return true;
     }
 
+    /**
+     * Действия
+     *
+     * @param $params
+     * @return bool
+     */
     public function action($params) {
         return true;
     }
 
+    /**
+     * идентификатор таба
+     *
+     * @return string
+     */
     protected function getTabName(): string {
         return "spare_parts_tab";
     }

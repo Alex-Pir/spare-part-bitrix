@@ -1,5 +1,5 @@
 <?php
-namespace Citfact\Rest\Traits;
+namespace Polus\SpareParts\Traits;
 
 use Bitrix\Main\Config\Option;
 use Exception;
@@ -11,7 +11,7 @@ use Polus\SpareParts\Constants;
  * Trait HasModuleOption
  * @package Citfact\Rest\Traits
  */
-trait HasModuleOption {
+trait HasModuleOptions {
 
     /**
      * Получение параметра настроек модуля

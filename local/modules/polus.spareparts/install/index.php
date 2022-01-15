@@ -103,10 +103,10 @@ class polus_spareparts extends CModule
          * Добавляет таб в инфоблок
          */
         $eventManager->registerEventHandler(
-            "iblock",
+            "main",
             "OnAdminIBlockElementEdit",
             $this->MODULE_ID,
-            "Polus\\SpareParts\\Handler", "initSparePartsTab"
+            "Polus\\SpareParts\\Handlers\\TabProductElement", "initSparePartsTab"
         );
     }
 
@@ -119,10 +119,10 @@ class polus_spareparts extends CModule
         $eventManager = Main\EventManager::getInstance();
 
         $eventManager->unRegisterEventHandler(
-            "iblock",
+            "main",
             "OnAdminIBlockElementEdit",
             $this->MODULE_ID,
-            "Polus\\SpareParts\\Handler", "initSparePartsTab"
+            "Polus\\SpareParts\\Handlers\\TabProductElement", "initSparePartsTab"
         );
     }
 

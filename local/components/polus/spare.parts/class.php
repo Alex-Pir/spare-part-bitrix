@@ -1,9 +1,11 @@
 <?php
 
+use Bitrix\Main\Config\Option;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main;
 use Bitrix\Main\Engine\ActionFilter;
 use Polus\SpareParts\Constants;
+use Polus\SpareParts\Options;
 use Polus\SpareParts\Tools\ElementHelper;
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
@@ -41,8 +43,8 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
      */
     protected function listKeysSignedParameters(): array {
         return [
-            "IBLOCK_ID",
-            "ELEMENT_ID"
+            "ELEMENT_ID",
+            "SPARE_PARTS_IBLOCK_ID"
         ];
     }
 
@@ -51,12 +53,22 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
      *
      * @param $arParams
      * @return array
+     * @throws Main\ArgumentNullException
+     * @throws Main\ArgumentOutOfRangeException
+     * @throws Main\LoaderException
      * @throws Main\SystemException
      */
     public function onPrepareComponentParams($arParams): array {
         $this->includeModule();
 
-        if (!$arParams["IBLOCK_ID"] || !$arParams["ELEMENT_ID"]) {
+        $arParams["SPARE_PARTS_IBLOCK_ID"] = Option::get(static::SPARE_PARTS_MODULE, Options::OPTION_SPARE_PART_IBLOCK_ID, false);
+        $arParams["IBLOCK_ID"] = Option::get(static::SPARE_PARTS_MODULE, Options::OPTION_PRODUCTS_IBLOCK_ID, false);
+
+        if (!$arParams["SPARE_PARTS_IBLOCK_ID"] || !$arParams["IBLOCK_ID"]) {
+            throw new Main\SystemException(Loc::getMessage(""));
+        }
+
+        if (!$arParams["ELEMENT_ID"]) {
             throw new Main\SystemException(Loc::getMessage(""));
         }
 
@@ -87,7 +99,7 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
                         ]
                     ),
                     "points" => ElementHelper::getPoints(
-                        $this->arParams["IBLOCK_ID"],
+                        $this->arParams["SPARE_PARTS_IBLOCK_ID"],
                         $this->arParams["ELEMENT_ID"]
                     )
                 ];
@@ -117,7 +129,7 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
 
     public function getSparePartInfoAction(int $elementId): array {
         try {
-            return ElementHelper::getIblockElementData($this->arParams["IBLOCK_ID"], $elementId);
+            return ElementHelper::getIblockElementData($this->arParams["SPARE_PARTS_IBLOCK_ID"], $elementId);
         } catch (Exception $ex) {
             AddMessage2Log($ex->getMessage());
         }
