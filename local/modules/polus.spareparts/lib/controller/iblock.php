@@ -2,43 +2,82 @@
 namespace Polus\SpareParts\Controller;
 
 use Bitrix\Main\Application;
+use Bitrix\Main\DB\SqlQueryException;
 use Bitrix\Main\Engine\Controller;
+use Bitrix\Main\Engine\ActionFilter;
 use Bitrix\Main\Error;
+use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Web\Json;
 use Exception;
 use Polus\SpareParts\Entity\SparePartTable;
 
+Loc::loadMessages(__FILE__);
+
+/**
+ * Класс-контроллер для работы с элементами (запасными частями) инфоблоков
+ */
 class Iblock extends Controller {
 
-    public function saveSparePartAction($parameters) {
-        if (!$parameters) {
-            throw new Exception();
+    /**
+     * Установка необходимых фильтров для запросов
+     *
+     * @return \array[][]
+     */
+    public function configureActions(): array {
+        return [
+            "saveSparePart" => [
+                "prefilters" => [
+                    new ActionFilter\Authentication(),
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf()
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Добавляет  запасную часть
+     *
+     * @param $parameters
+     * @return bool
+     */
+    public function saveSparePartAction($parameters): bool {
+        try {
+            if (!$parameters) {
+                throw new Exception(Loc::getMessage("SPARE_PARTS_IBLOCK_PARAMETERS_NOT_FOUND"));
+            }
+
+            $parameters = Json::decode($parameters);
+
+            if (!$parameters
+                || !$parameters["iblock_id"]
+                || !$parameters["element_id"]
+                || !$parameters["items"]) {
+                throw new Exception(Loc::getMessage("SPARE_PARTS_IBLOCK_PARAMETERS_NOT_FOUND"));
+            }
+
+            $items = Json::decode($parameters["items"]);
+
+            $elements = $this->getElements($parameters["iblock_id"], $parameters["element_id"]);
+
+            $tableElementsDiff = array_diff_key($elements, $items);
+            $itemElementsDiff = array_diff_key($items, $elements);
+
+            /**
+             * оставляем в $items только старые элементы
+             */
+            foreach ($itemElementsDiff as $key => $item) {
+                unset($items[$key]);
+            }
+
+            return $this->saveToDB($parameters["iblock_id"], $parameters["element_id"], $tableElementsDiff, $items, $itemElementsDiff);
+        } catch (Exception $ex) {
+            $this->addError(new Error($ex->getMessage()));
         }
-
-        $parameters = Json::decode($parameters);
-
-        if (!$parameters
-            || !$parameters["iblock_id"]
-            || !$parameters["element_id"]
-            || !$parameters["items"]) {
-            throw new Exception();
-        }
-
-        $items = Json::decode($parameters["items"]);
-
-        $elements = $this->getElements($parameters["iblock_id"], $parameters["element_id"]);
-
-        $tableElementsDiff = array_diff_key($elements, $items);
-        $itemElementsDiff = array_diff_key($items, $elements);
-
-        /**
-         * оставляем в $items только старые элементы
-         */
-        foreach ($itemElementsDiff as $key => $item) {
-            unset($items[$key]);
-        }
-
-        return $this->saveToDB($parameters["iblock_id"], $parameters["element_id"], $tableElementsDiff, $items, $itemElementsDiff);
+        
+        return false;
     }
 
     /**
@@ -81,7 +120,6 @@ class Iblock extends Controller {
      * @param array $updateElements
      * @param array $saveElements
      * @return bool
-     * @throws \Bitrix\Main\DB\SqlQueryException
      */
     protected function saveToDB(int $iblockId, int $elementId, array $deleteElements, array $updateElements, array $saveElements): bool {
         $connection = Application::getConnection();
@@ -136,7 +174,12 @@ class Iblock extends Controller {
         } catch (Exception $ex) {
             AddMessage2Log($ex->getMessage());
             $this->addError(new Error($ex->getMessage()));
-            $connection->rollbackTransaction();
+
+            try {
+                $connection->rollbackTransaction();
+            } catch (SqlQueryException $sqlEx) {
+                AddMessage2Log($sqlEx->getMessage());
+            }
         }
 
         return false;
@@ -152,7 +195,7 @@ class Iblock extends Controller {
      */
     protected function prepareDataToDB(array $data, array $addKeys = []): array {
         if (empty($data)) {
-            throw new Exception();
+            throw new Exception(Loc::getMessage("SPARE_PARTS_IBLOCK_DATA_IS_EMPTY"));
         }
 
         $result = [

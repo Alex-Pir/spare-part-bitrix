@@ -11,6 +11,9 @@ use Polus\SpareParts\Traits\HasModules;
 
 Loc::loadMessages(__FILE__);
 
+/**
+ * Класс для работы с настройками модуля
+ */
 class Options {
     use HasModules;
 
@@ -48,6 +51,11 @@ class Options {
         ];
     }
 
+    /**
+     * Возвращает таб с основными настройками модуля
+     *
+     * @return Tab
+     */
     protected function getMainTab(): Tab {
         $tab = new Tab(
             "edit1",

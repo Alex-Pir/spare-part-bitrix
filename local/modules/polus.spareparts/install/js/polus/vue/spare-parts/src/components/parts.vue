@@ -30,7 +30,7 @@
               v-for="element in points"
               :key="'spare-part-' + element.id"
               :id="element.id"
-              :iblock-id="iblockId"
+              :iblock-id="sparePartsIblockId"
               :coords="{x: element.x, y: element.y}"
               :allow-value="element.value"
               :error="element.error"
@@ -75,7 +75,11 @@ export default {
       type: Array,
       default: []
     },
-    iblockId: {
+    productIblockId: {
+      type: Number,
+      default: 0
+    },
+    sparePartsIblockId: {
       type: Number,
       default: 0
     },
@@ -209,7 +213,7 @@ export default {
       }
 
       formSendAll.append('file', file);
-      formSendAll.append('iblockId', this.iblockId.toString());
+      formSendAll.append('iblockId', this.productIblockId.toString());
       formSendAll.append('elementId', this.elementId.toString());
 
       this.$request
@@ -292,7 +296,7 @@ export default {
 
       let parameters = {
         items: JSON.stringify(items),
-        iblock_id: this.iblockId,
+        iblock_id: this.sparePartsIblockId,
         element_id: this.elementId,
         file: this.picture.src
       };

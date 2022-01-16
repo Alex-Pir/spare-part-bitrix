@@ -71,8 +71,9 @@ class TabProductElement {
         Extension::load(["polus.vue.spare-parts"]);
 
         $sparePartsIblockId = static::getModuleOption(Options::OPTION_SPARE_PART_IBLOCK_ID, false);
+        $sproductsIblockId = static::getModuleOption(Options::OPTION_PRODUCTS_IBLOCK_ID, false);
 
-        if (!$sparePartsIblockId) {
+        if (!$sparePartsIblockId || !$sproductsIblockId) {
             echo '';
             return;
         }
@@ -83,7 +84,7 @@ class TabProductElement {
         ob_start();
         ?>
         <div id="spare_parts">
-            <parts :picture="picture" :iblock-id="iblockId" :element-id="elementId" :saved-points="savedPoints"/>
+            <parts :picture="picture" :spare-parts-iblock-id="sparePartsIblockId" :product-iblock-id="productsIblockId" :element-id="elementId" :saved-points="savedPoints"/>
         </div>
         <script type="text/javascript">
             BX.ready(function () {
@@ -92,7 +93,8 @@ class TabProductElement {
                     data() {
                         return {
                             picture: <?= Json::encode($file) ?>,
-                            iblockId: <?= (string)$sparePartsIblockId ?>,
+                            sparePartsIblockId: <?= (string)$sparePartsIblockId ?>,
+                            productsIblockId: <?= (string)$sproductsIblockId ?>,
                             elementId: <?= (string)$elementInfo["ID"] ?>,
                             savedPoints: <?= Json::encode($points) ?>
                         }

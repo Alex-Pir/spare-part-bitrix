@@ -132,7 +132,7 @@ class polus_spareparts extends CModule
      * @return void
      */
     public function installFiles() {
-        CopyDirFiles(__DIR__ . "/components", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/components/" . POLUS_SPARE_PARTS_MODULE, true, true);
+        CopyDirFiles(__DIR__ . "/components", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/components/polus/", true, true);
         CopyDirFiles(__DIR__ . "/js", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/js/", true, true);
     }
 
@@ -142,7 +142,7 @@ class polus_spareparts extends CModule
      * @return void
      */
     public function unInstallFiles() {
-        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/components/" . POLUS_SPARE_PARTS_MODULE);
+        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/components/polus/");
         DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/js/polus/");
     }
 
