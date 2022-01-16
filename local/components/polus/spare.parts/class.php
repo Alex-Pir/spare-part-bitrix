@@ -127,6 +127,12 @@ class PolusSparePartsComponent extends CBitrixComponent implements Main\Engine\C
         return true;
     }
 
+    /**
+     * Возвращает информацию по выбранной запасной части
+     *
+     * @param int $elementId
+     * @return array
+     */
     public function getSparePartInfoAction(int $elementId): array {
         try {
             return ElementHelper::getIblockElementData($this->arParams["SPARE_PARTS_IBLOCK_ID"], $elementId);

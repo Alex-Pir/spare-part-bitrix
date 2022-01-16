@@ -127,6 +127,26 @@ class polus_spareparts extends CModule
     }
 
     /**
+     * Копирование файлов модуля
+     *
+     * @return void
+     */
+    public function installFiles() {
+        CopyDirFiles(__DIR__ . "/components", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/components/" . POLUS_SPARE_PARTS_MODULE, true, true);
+        CopyDirFiles(__DIR__ . "/js", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/js/", true, true);
+    }
+
+    /**
+     * Удаление файлов модуля
+     *
+     * @return void
+     */
+    public function unInstallFiles() {
+        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/components/" . POLUS_SPARE_PARTS_MODULE);
+        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/js/polus/");
+    }
+
+    /**
      * Установить данные по версии модуля
      */
     protected function loadVersion()
