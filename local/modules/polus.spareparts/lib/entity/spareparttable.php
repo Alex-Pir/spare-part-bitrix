@@ -24,32 +24,32 @@ class SparePartTable extends DataManager {
 
     public static function getMap() {
         return [
-            new IntegerField("ID", [
+            new IntegerField(static::ID, [
                 "primary" => true,
                 "autocomplete" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_ID")
             ]),
-            new IntegerField("IBLOCK_ID", [
+            new IntegerField(static::IBLOCK_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_IBLOCK_ID")
             ]),
-            new IntegerField("ELEMENT_ID", [
+            new IntegerField(static::ELEMENT_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_ELEMENT_ID")
             ]),
-            new IntegerField("SPARE_PART_INDEX", [
+            new IntegerField(static::INDEX, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_INDEX")
             ]),
-            new IntegerField("COORDS_X", [
+            new IntegerField(static::X, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_COORDS_X")
             ]),
-            new IntegerField("COORDS_Y", [
+            new IntegerField(static::Y, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_COORDS_Y")
             ]),
-            new IntegerField("SPARE_PART_ID", [
+            new IntegerField(static::SPARE_PART_ID, [
                 "required" => true,
                 "title" => Loc::getMessage("POLUS_SPARE_PARTS_FIELD_SPARE_PART_ID")
             ]),
@@ -63,11 +63,11 @@ class SparePartTable extends DataManager {
      */
     public static function getSelectRows(): array {
         return [
-            self::ID,
-            self::INDEX,
-            self::X,
-            self::Y,
-            self::SPARE_PART_ID
+            static::ID,
+            static::INDEX,
+            static::X,
+            static::Y,
+            static::SPARE_PART_ID
         ];
     }
 }

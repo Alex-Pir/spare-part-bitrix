@@ -1,0 +1,2 @@
+<?php
+$MESS["SPARE_PART_TPL_BTN_ELEMENT_DETAIL_NAME"] = "Подробнее";

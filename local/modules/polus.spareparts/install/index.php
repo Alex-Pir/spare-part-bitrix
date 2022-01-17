@@ -6,6 +6,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 use Bitrix\Main;
 use Bitrix\Main\Localization\Loc;
+use Citfact\Rest\Entity\Export\TableManager;
 
 Loc::loadMessages(__FILE__);
 
@@ -27,10 +28,10 @@ class polus_spareparts extends CModule
 	 */
 	public function __construct()
 	{
-		$this->MODULE_NAME = Loc::getMessage("CITRUS_REST_SALE_F_NAME");
-		$this->MODULE_DESCRIPTION = Loc::getMessage("CITRUS_REST_SALE_F_DESCRIPTION");
-		$this->PARTNER_NAME = Loc::getMessage("CITRUS_REST_SALE_F_COMPANY_NAME");
-		$this->PARTNER_URI = Loc::getMessage('CITRUS_REST_SALE_F_COMPANY_URL');
+		$this->MODULE_NAME = Loc::getMessage("POLUS_SPARE_PARTS_F_NAME");
+		$this->MODULE_DESCRIPTION = Loc::getMessage("POLUS_SPARE_PARTS_F_DESCRIPTION");
+		$this->PARTNER_NAME = Loc::getMessage("POLUS_SPARE_PARTS_F_COMPANY_NAME");
+		$this->PARTNER_URI = Loc::getMessage('POLUS_SPARE_PARTS_F_COMPANY_URL');
 
 		$this->loadVersion();
 	}
@@ -56,7 +57,7 @@ class polus_spareparts extends CModule
 
 		$APPLICATION->IncludeAdminFile(
 			Loc::getMessage(
-				"CITRUS_REST_SALE_F_INSTALL_TITLE",
+				"POLUS_SPARE_PARTS_F_INSTALL_TITLE",
 				array("#MODULE#" => $this->MODULE_NAME, "#MODULE_ID#" => $this->MODULE_ID)
 			),
 			__DIR__ . "/step1.php"
@@ -84,12 +85,85 @@ class polus_spareparts extends CModule
 
 		$APPLICATION->IncludeAdminFile(
 			Loc::getMessage(
-				"CITRUS_REST_SALE_F_INSTALL_TITLE",
+				"POLUS_SPARE_PARTS_F_INSTALL_TITLE",
 				array("#MODULE#" => $this->MODULE_NAME)
 			),
 			__DIR__ . "/uninstall.php"
 		);
 	}
+
+    /**
+     * Создание таблиц
+     *
+     * @return void
+     */
+    public function installDb() {
+        TableManager::install();
+    }
+
+    /**
+     * Удаление таблиц
+     *
+     * @return void
+     */
+    public function unInstallDB() {
+        TableManager::uninstall();
+    }
+
+    /**
+     * Добалвение (регистрация) обработчиков
+     *
+     * @return void
+     */
+    public function installEvents() {
+        $eventManager = Main\EventManager::getInstance();
+
+        /**
+         * Добавляет таб в инфоблок
+         */
+        $eventManager->registerEventHandler(
+            "main",
+            "OnAdminIBlockElementEdit",
+            $this->MODULE_ID,
+            "Polus\\SpareParts\\Handlers\\TabProductElement", "initSparePartsTab"
+        );
+    }
+
+    /**
+     * Удаление всех зависимостей между модулями (события)
+     *
+     * @return void
+     */
+    public function uninstallEvents() {
+        $eventManager = Main\EventManager::getInstance();
+
+        $eventManager->unRegisterEventHandler(
+            "main",
+            "OnAdminIBlockElementEdit",
+            $this->MODULE_ID,
+            "Polus\\SpareParts\\Handlers\\TabProductElement", "initSparePartsTab"
+        );
+    }
+
+    /**
+     * Копирование файлов модуля
+     *
+     * @return void
+     */
+    public function installFiles() {
+        CopyDirFiles(__DIR__ . "/components", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/components/polus/", true, true);
+        CopyDirFiles(__DIR__ . "/js", Main\Application::getDocumentRoot() . POLUS_SPARE_PARTS_BX_ROOT . "/js/", true, true);
+    }
+
+    /**
+     * Удаление файлов модуля
+     *
+     * @return void
+     */
+    public function unInstallFiles() {
+        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/components/polus/");
+        DeleteDirFilesEx(POLUS_SPARE_PARTS_BX_ROOT . "/js/polus/");
+    }
 
     /**
      * Установить данные по версии модуля

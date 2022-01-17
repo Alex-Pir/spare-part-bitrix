@@ -1,0 +1,66 @@
+.parts-container {
+  position: relative;
+  display: flex;
+}
+.parts-container .container-image {
+  margin-right: 50px;
+}
+.parts-container .container-image img {
+  max-width: 600px;
+}
+.parts-container .container-image__block .picture-remove {
+  position: absolute;
+  border-radius: 50%;
+  left: 0;
+}
+.parts-container .container-point {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #8fc468;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.parts-container .container-point .active {
+  background-color: #488a00;
+}
+.parts-container__points .element-point {
+  margin-bottom: 10px;
+}
+.parts-container__points .element-point td .error {
+  border: 1px solid #fd0202;
+}
+.parts-container__points .message {
+  color: #488a00;
+  margin-top: 5px;
+}
+.parts-container__points .error {
+  color: #fd0202;
+  margin-top: 5px;
+}
+
+.message-notification {
+  padding: 15px 30px 15px 15px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+}
+.message-notification__success {
+  background-color: #488a00;
+}
+.message-notification__error {
+  background-color: #fd0202;
+}
+.message-notification .ui-notification-balloon-close-btn:after {
+  width: 3px;
+  height: 12px;
+}
+.message-notification .ui-notification-balloon-close-btn:before {
+  width: 12px;
+  height: 3px;
+}
