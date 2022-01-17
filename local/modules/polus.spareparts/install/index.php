@@ -6,6 +6,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 use Bitrix\Main;
 use Bitrix\Main\Localization\Loc;
+use Citfact\Rest\Entity\Export\TableManager;
 
 Loc::loadMessages(__FILE__);
 
@@ -90,6 +91,24 @@ class polus_spareparts extends CModule
 			__DIR__ . "/uninstall.php"
 		);
 	}
+
+    /**
+     * Создание таблиц
+     *
+     * @return void
+     */
+    public function installDb() {
+        TableManager::install();
+    }
+
+    /**
+     * Удаление таблиц
+     *
+     * @return void
+     */
+    public function unInstallDB() {
+        TableManager::uninstall();
+    }
 
     /**
      * Добалвение (регистрация) обработчиков
